@@ -15,7 +15,7 @@
     } else {
         $sql1 = "INSERT INTO user(first_name, last_name, username, password, role) VALUES ('{$user_fname}', '{$user_lname}', '{$user_username}', '{$user_password}', '{$user_role}')";
         if (mysqli_query($conn, $sql1)) {
-            header('Location: {$hostname}/admin/users.php');
+            header('Location: http://localhost/news-site/admin/users.php');
         }
     }
 }
