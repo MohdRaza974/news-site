@@ -1,4 +1,6 @@
-<?php include "header.php"; ?>
+<?php include "header.php";
+include 'user-restriction.php';
+?>
 <div id="admin-content">
     <div class="container">
         <div class="row">

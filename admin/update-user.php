@@ -1,4 +1,6 @@
-<?php include "header.php";
+<?php 
+include "header.php";
+include 'user-restriction.php';
 
 $user_id = $_GET['id'];
 
