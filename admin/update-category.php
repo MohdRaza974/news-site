@@ -7,7 +7,7 @@ include 'user-restriction.php';
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="adin-heading"> Update Category</h1>
+                <h1 class="admin-heading"> Update Category</h1>
             </div>
             <div class="col-md-offset-3 col-md-6">
                 <form action="" method="POST">
