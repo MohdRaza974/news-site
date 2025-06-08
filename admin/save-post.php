@@ -6,11 +6,11 @@ if (isset($_FILES['fileToUpload'])) {
 
     $file_name = $_FILES['fileToUpload']['name'];
     $file_size = $_FILES['fileToUpload']['size'];
-    $file_temp_name = $_FILES['fileToUpload']['tmp_name']; // fixed key
+    $file_temp_name = $_FILES['fileToUpload']['tmp_name'];
     $file_type = $_FILES['fileToUpload']['type'];
 
-    $temp = explode('.', $file_name); // fix for PHP 8+
-    $file_extension = strtolower(end($temp)); // now safe
+    $temp = explode('.', $file_name);
+    $file_extension = strtolower(end($temp));
 
     $extension = array("jpeg", "jpg", "png");
 
@@ -18,7 +18,7 @@ if (isset($_FILES['fileToUpload'])) {
         $errors[] = "Wrong file extension. Please upload png or jpg file.";
     }
 
-    if ($file_size > 2097152) { // also corrected this line to check file size, not extension
+    if ($file_size > 2097152) {
         $errors[] = "The file size has exceed the limit. It should be maximum 2mb";
     }
 
