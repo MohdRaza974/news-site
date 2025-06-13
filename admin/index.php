@@ -29,7 +29,7 @@ if (isset($_SESSION['username'])) {
                     <img class="logo" src="images/news.jpg">
                     <h3 class="heading">Admin</h3>
                     <!-- Form Start -->
-                    <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
+                    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
                         <div class="form-group">
                             <label>Username</label>
                             <input type="text" name="username" class="form-control" placeholder="" required>
@@ -43,8 +43,6 @@ if (isset($_SESSION['username'])) {
                     <!-- /Form  End -->
                     <?php
                     if (isset($_POST['login'])) {
-                        include 'config.php';
-
                         $username = mysqli_real_escape_string($conn, $_POST['username']);
                         $password = mysqli_real_escape_string($conn, md5($_POST['password']));
                         $sql = "SELECT user_id, username, role FROM user WHERE username = '{$username}' AND password = '{$password}'";

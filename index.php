@@ -54,7 +54,7 @@
                             </div>
                         <?php }
                     } else {
-                        echo "<h1>There are is no data</h1>";
+                        echo "<h1>No Records Found</h1>";
                     } ?>
 
                     <!-- <ul class='pagination'>
