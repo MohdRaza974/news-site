@@ -4,7 +4,7 @@ include 'config.php';
 $post_id =$_GET['id'];
 $cat_id =$_GET['catid'];
 
-$sql1 = "SELECT FROM post WHERE post_id = {$post_id};";
+$sql1 = "SELECT * FROM post WHERE post_id = {$post_id};";
 $result1 = mysqli_query($conn, $sql1) or die("Query Failed.");
 $row = mysqli_fetch_assoc($result1);
 
