@@ -24,7 +24,7 @@
                             <div class="post-content">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <a class="post-img" href="single.php?id=<?php echo $row['post_id'] ?>"><img src="admin/upload<?php echo $row['post_img'] ?>" alt="" /></a>
+                                        <a class="post-img" href="single.php?id=<?php echo $row['post_id'] ?>"><img src="admin/upload/<?php echo $row['post_img'] ?>" alt="" /></a>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="inner-content clearfix">
@@ -33,7 +33,7 @@
                                             <div class="post-information">
                                                 <span>
                                                     <i class="fa fa-tags" aria-hidden="true"></i>
-                                                    <a href='category.php'><?php echo $row['category_name'] ?></a>
+                                                    <a href='category.php?cid=<?php echo $row['category'] ?>'><?php echo $row['category_name'] ?></a>
                                                 </span>
                                                 <span>
                                                     <i class="fa fa-user" aria-hidden="true"></i>
@@ -47,7 +47,7 @@
                                             <p class="description">
                                                 <?php echo substr($row['description'],0, 150) . "..." ?>
                                             </p>
-                                            <a class='read-more pull-right' href='single.php?id=<?php echo $row['post_id'] ?>'>read more</a>
+                                            <a class='read-more pull-right' href='single.php?id=<?php echo $row['post_id'] ?>'>Read More</a>
                                         </div>
                                     </div>
                                 </div>
