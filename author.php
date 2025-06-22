@@ -69,7 +69,7 @@
                     } ?>
 
                     <?php
-                    $sql1 = "SELECT COUNT(*) AS total_records FROM post WHERE category = {$auth_id}";
+                    $sql1 = "SELECT COUNT(*) AS total_records FROM post WHERE author = {$auth_id}";
                     $result1 = mysqli_query($conn, $sql1) or die("Connection Failed");
 
                     if (mysqli_num_rows($result1) > 0) {
@@ -79,14 +79,14 @@
 
                         echo "<ul class='pagination admin-pagination'>";
                         if ($page > 1) {
-                            echo '<li><a href="category.php?aid=' . $auth_id . '&page=' . ($page - 1) . '">Previous</a></li>';
+                            echo '<li><a href="author.php?aid=' . $auth_id . '&page=' . ($page - 1) . '">Previous</a></li>';
                         }
                         for ($i = 1; $i <= $total_pages; $i++) {
                             $active = ($i == $page) ? "active" : "";
-                            echo '<li class="' . $active . '"><a href="category.php?aid=' . $auth_id . '&page=' . $i . '">' . $i . '</a></li>';
+                            echo '<li class="' . $active . '"><a href="author.php?aid=' . $auth_id . '&page=' . $i . '">' . $i . '</a></li>';
                         }
                         if ($total_pages > $page) {
-                            echo '<li><a href="category.php?aid=' . $auth_id . '&page=' . ($page + 1) . '">Next</a></li>';
+                            echo '<li><a href="author.php?aid=' . $auth_id . '&page=' . ($page + 1) . '">Next</a></li>';
                         }
                         echo "</ul>";
                     }

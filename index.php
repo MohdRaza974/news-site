@@ -76,7 +76,7 @@
 
                         echo "<ul class='pagination admin-pagination'>";
                         if ($page > 1) {
-                            echo '<li><a href="post.php?page=' . ($page - 1) . '">Previous</a></li>';
+                            echo '<li><a href="index.php?page=' . ($page - 1) . '">Previous</a></li>';
 
                         }
                         for ($i = 1; $i <= $total_pages; $i++) {
@@ -85,11 +85,11 @@
                             } else {
                                 $active = "";
                             }
-                            echo '<li class="' . $active . '"><a href="post.php?page=' . $i . '">' . $i . '</a></li>';
+                            echo '<li class="' . $active . '"><a href="index.php?page=' . $i . '">' . $i . '</a></li>';
 
                         }
                         if ($total_pages > $page) {
-                            echo '<li><a href="post.php?page=' . ($page + 1) . '">Next</a></li>';
+                            echo '<li><a href="index.php?page=' . ($page + 1) . '">Next</a></li>';
 
                         }
                         echo "</ul>";
