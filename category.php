@@ -9,21 +9,20 @@ include "config.php";
                 <!-- post-container -->
                 <div class="post-container">
                     <?php
-                    // After you define $cat_id and before the main post query
-                    $cat_query = "SELECT category_name FROM category WHERE category_id = {$cat_id}";
-                    $cat_result = mysqli_query($conn, $cat_query);
-                    $cat_row = mysqli_fetch_assoc($cat_result);
-                    echo "<h2 class='page-heading'>{$cat_row['category_name']}</h2>";
-                    ?>
-                    <?php
+                    include "config.php";
                     $limit = 3;
                     $page = isset($_GET['page']) ? $_GET['page'] : 1;
                     $offset = ($page - 1) * $limit;
                     if (isset($_GET['cid'])) {
                         $cat_id = $_GET['cid'];
                     }
+                    // After you define $cat_id and before the main post query
+                    $cat_query = "SELECT category_name FROM category WHERE category_id = {$cat_id}";
+                    $cat_result = mysqli_query($conn, $cat_query);
+                    $cat_row = mysqli_fetch_assoc($cat_result);
+                    echo "<h2 class='page-heading'>{$cat_row['category_name']}</h2>";               
 
-                    $sql = "SELECT post.post_id, post.title, post.post_img, post.post_date, post.description, post.category, category.category_name, user.username FROM post 
+                    $sql = "SELECT post.post_id, post.title, post.post_img, post.author, post.post_date, post.description, post.category, category.category_name, user.username FROM post 
                         LEFT JOIN category ON post.category = category.category_id
                         LEFT JOIN user ON post.author = user.user_id
                         WHERE post.category = {$cat_id}
@@ -46,11 +45,11 @@ include "config.php";
                                             <div class="post-information">
                                                 <span>
                                                     <i class="fa fa-tags" aria-hidden="true"></i>
-                                                    <a href='category.php'><?php echo $row['category_name'] ?></a>
+                                                    <a href='category.php?cid=<?php echo $row['category'] ?>'><?php echo $row['category_name'] ?></a>
                                                 </span>
                                                 <span>
                                                     <i class="fa fa-user" aria-hidden="true"></i>
-                                                    <a href='author.php'><?php echo $row['username'] ?></a>
+                                                    <a href='author.php?aid=<?php echo $row['author'] ?>'><?php echo $row['username'] ?></a>
                                                 </span>
                                                 <span>
                                                     <i class="fa fa-calendar" aria-hidden="true"></i>

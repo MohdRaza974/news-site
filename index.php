@@ -5,13 +5,14 @@
             <div class="col-md-8">
                 <!-- post-container -->
                 <div class="post-container">
+                    <h2 class="page-heading">Home</h2>
                     <?php
                     include "config.php";
                     $limit = 3;
                     $page = isset($_GET['page']) ? $_GET['page'] : 1;
                     $offset = ($page - 1) * $limit;
 
-                    $sql = "SELECT post.post_id, post.title, post.post_img, post.post_date, post.description, post.category, category.category_name, user.username FROM post 
+                    $sql = "SELECT post.post_id, post.title, post.post_img, post.post_date, post.description, post.author, post.category, category.category_name, user.username FROM post 
                         LEFT JOIN category ON post.category = category.category_id
                         LEFT JOIN user ON post.author = user.user_id
                         ORDER BY post.post_id DESC
@@ -37,7 +38,7 @@
                                                 </span>
                                                 <span>
                                                     <i class="fa fa-user" aria-hidden="true"></i>
-                                                    <a href='author.php'><?php echo $row['username'] ?></a>
+                                                    <a href='author.php?aid=<?php echo $row['author'] ?>'><?php echo $row['username'] ?></a>
                                                 </span>
                                                 <span>
                                                     <i class="fa fa-calendar" aria-hidden="true"></i>

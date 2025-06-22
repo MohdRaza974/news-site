@@ -11,12 +11,26 @@ include 'user-restriction.php';
             </div>
             <div class="col-md-offset-3 col-md-6">
                 <!-- Form Start -->
-                <form action="" method="POST" autocomplete="off">
+                <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" autocomplete="off">
                     <div class="form-group">
                         <label>Category Name</label>
+                 <?php 
+                    include "config.php";
+
+                    if(isset($_POST['submit'])){
+                        $cat_name = mysqli_real_escape_string($conn, $_POST['cat']);
+                        $sql = "INSERT INTO category(category_name) VALUES ('{$cat_name}')";
+                        $result = mysqli_query($conn, $sql);
+                        if($result){
+                            header("Location: {$hostname}/admin/category.php");
+                        } else {
+                            echo "Category Creation Failed!";
+                        }
+                    }
+                 ?>
                         <input type="text" name="cat" class="form-control" placeholder="Category Name" required>
                     </div>
-                    <input type="submit" name="save" class="btn btn-primary" value="Save" required />
+                    <input type="submit" name="submit" class="btn btn-primary" value="Save" required />
                 </form>
                 <!-- /Form End -->
             </div>
