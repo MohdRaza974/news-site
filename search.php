@@ -11,7 +11,7 @@ $search_term = $_GET['search'];
                     <h2 class="page-heading">Search : <?php echo $search_term ?></h2>
                     <?php
                     $limit = 3;
-                    $page = isset($_GET['page']) ? mysqli_real_escape_string($conn, $_GET['search']) : 1;
+                    $page = isset($_GET['page']) ? mysqli_real_escape_string($conn, $_GET['page']) : 1;
                     $offset = ($page - 1) * $limit;
                     if (isset($_GET['search'])) {
                         $search_id = mysqli_real_escape_string($conn, $_GET['search']);
