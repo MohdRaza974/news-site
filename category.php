@@ -20,7 +20,7 @@ include "config.php";
                     $cat_query = "SELECT category_name FROM category WHERE category_id = {$cat_id}";
                     $cat_result = mysqli_query($conn, $cat_query);
                     $cat_row = mysqli_fetch_assoc($cat_result);
-                    echo "<h2 class='page-heading'>{$cat_row['category_name']}</h2>";               
+                    echo "<h2 class='page-heading'>{$cat_row['category_name']} News</h2>";               
 
                     $sql = "SELECT post.post_id, post.title, post.post_img, post.author, post.post_date, post.description, post.category, category.category_name, user.username FROM post 
                         LEFT JOIN category ON post.category = category.category_id
@@ -40,7 +40,7 @@ include "config.php";
                                     </div>
                                     <div class="col-md-8">
                                         <div class="inner-content clearfix">
-                                            <h3><a href='single.php?id=<?php echo $row['post_id'] ?>'><?php echo $row['title'] ?></a>
+                                            <h3><a href='single.php?id=<?php echo $row['post_id'] ?>'><?php echo ucfirst($row['title']) ?></a>
                                             </h3>
                                             <div class="post-information">
                                                 <span>

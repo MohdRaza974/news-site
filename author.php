@@ -18,7 +18,7 @@
                     $auth_query = "SELECT * FROM user WHERE user_id = {$auth_id}";
                     $auth_result = mysqli_query($conn, $auth_query);
                     $auth_row = mysqli_fetch_assoc($auth_result);
-                    $s = ucfirst($auth_row['username']);
+                    $s = ucfirst($auth_row['first_name'] . " " . $auth_row['last_name']);
                     echo "<h2 class='page-heading'>{$s}</h2>";
 
                     $sql = "SELECT post.post_id, post.title, post.post_img, post.post_date, post.author, post.description, post.category, category.category_name, user.username FROM post 

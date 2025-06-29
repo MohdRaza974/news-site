@@ -24,7 +24,7 @@
                         while ($row = mysqli_fetch_assoc($result)) {
                             ?>
                     <div class="post-content single-post">
-                        <h3><?php echo $row['title']?></h3>
+                        <h3><?php echo ucfirst($row['title'])?></h3>
                         <div class="post-information">
                             <span>
                                 <i class="fa fa-tags" aria-hidden="true"></i>
