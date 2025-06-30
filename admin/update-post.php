@@ -35,7 +35,7 @@
                             <div class="form-group">
                                 <label for="exampleInputPassword1"> Description</label>
                                 <textarea name="postdesc" class="form-control" required rows="5">
-                                    <?php echo $row['description'] ?>
+                                    <?php echo htmlspecialchars($row['description']) ?>
                                 </textarea>
                             </div>
                             <div class="form-group">
@@ -58,7 +58,11 @@
                                     ?>
 
                                 </select>
+                                <input type="hidden" name="old_category" value="<?php echo $row['category'] ?>">
                             </div>
+                            <!-- <div class="form-group">
+                                <input type="hidden" name="old_category" value="<?php echo $row['category'] ?>">
+                            </div> -->
                             <div class="form-group">
                                 <label for="">Post image</label>
                                 <input type="file" name="new-image">
