@@ -1,12 +1,35 @@
-<?php 
+<?php
 include 'config.php';
 session_start();
+
 if (isset($_SESSION['username'])) {
     header("Location: {$hostname}/admin/post.php");
-} 
+    exit;
+}
 
+if (isset($_POST['login'])) {
+    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    $password = mysqli_real_escape_string($conn, md5($_POST['password']));
+
+    if (empty($username) || empty($password)) {
+        $error_message = "All fields are required!";
+    } else {
+        $sql = "SELECT user_id, username, role FROM user WHERE username = '{$username}' AND password = '{$password}'";
+        $result = mysqli_query($conn, $sql) or die('Query Failed!');
+
+        if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            $_SESSION["username"] = $row['username'];
+            $_SESSION["user_id"] = $row['user_id'];
+            $_SESSION["user_role"] = $row['role'];
+            header("Location: {$hostname}/admin/post.php");
+            exit;
+        } else {
+            $error_message = "Username or password is incorrect!";
+        }
+    }
+}
 ?>
-
 
 <!doctype html>
 <html>
@@ -28,38 +51,24 @@ if (isset($_SESSION['username'])) {
                 <div class="col-md-offset-4 col-md-4">
                     <img class="logo" src="images/news.jpg">
                     <h3 class="heading">Admin</h3>
+
                     <!-- Form Start -->
                     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
                         <div class="form-group">
                             <label>Username</label>
-                            <input type="text" name="username" class="form-control" placeholder="" required>
+                            <input type="text" name="username" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="" required>
+                            <input type="password" name="password" class="form-control" required>
                         </div>
-                        <input type="submit" name="login" class="btn btn-primary" value="login" />
+                        <input type="submit" name="login" class="btn btn-primary" value="Login" />
                     </form>
                     <!-- /Form  End -->
+
                     <?php
-                    if (isset($_POST['login'])) {
-                        $username = mysqli_real_escape_string($conn, $_POST['username']);
-                        $password = mysqli_real_escape_string($conn, md5($_POST['password']));
-                        $sql = "SELECT user_id, username, role FROM user WHERE username = '{$username}' AND password = '{$password}'";
-                        $result = mysqli_query($conn, $sql) or die('Query Failed!');
-                        if (mysqli_num_rows($result) > 0) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                session_start();
-                                $_SESSION["username"] = $row['username'];
-                                $_SESSION["user_id"] = $row['user_id'];
-                                $_SESSION["user_role"] = $row['role'];
-
-                                header("Location: {$hostname}/admin/post.php");
-                            }
-                        } else {
-                            echo "<div class='alert alert-danger'>Username and Password are mismatch</div>";
-                        }
-
+                    if (isset($error_message)) {
+                        echo "<div class='alert alert-danger'>{$error_message}</div>";
                     }
                     ?>
                 </div>

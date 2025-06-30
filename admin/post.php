@@ -45,10 +45,11 @@
                         
                         $result = mysqli_query($conn, $sql) or die('Query Failed!');
                         if (mysqli_num_rows($result) > 0) {
+                            $serial = $offset + 1;
                             while ($row = mysqli_fetch_assoc($result)) {
                                 ?>
                                 <tr>
-                                    <td class='<?php echo $row['post_id'] ?>'><?php echo $row['post_id'] ?></td>
+                                    <td class='<?php echo $row['post_id'] ?>'><?php echo $serial ?></td>
                                     <td><?php echo $row['title'] ?></td>
                                     <td><?php echo $row['category_name'] ?></td>
                                     <td><?php echo $row['post_date'] ?></td>
@@ -58,16 +59,8 @@
                                     <td class='delete'><a href='delete-post.php?id=<?php echo $row['post_id'] ?>&catid=<?php echo $row['category'] ?>'><i
                                                 class='fa fa-trash-o'></i></a></td>
                                 </tr>
-                                <!-- <tr>
-                              <td class='id'>1</td>
-                              <td>Lorem ipsum dolor sit amet</td>
-                              <td>Html</td>
-                              <td>01 Nov, 2019</td>
-                              <td>Admin</td>
-                              <td class='edit'><a href='update-post.php'><i class='fa fa-edit'></i></a></td>
-                              <td class='delete'><a href='delete-post.php'><i class='fa fa-trash-o'></i></a></td>
-                          </tr> -->
                                 <?php
+                                $serial++;
                             }
                         }
                         ?>
