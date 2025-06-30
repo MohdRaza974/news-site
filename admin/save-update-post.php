@@ -1,15 +1,15 @@
 <?php
 include 'config.php';
 
-if (empty($_FILES['new-image']['name'])) {
-    $file_name = $_POST['old-image'];
-} else {
-    $errors = array();
+$upload_dir = 'upload/';
+$errors = array();
 
+if (empty($_FILES['new-image']['name'])) {
+    $image_save = $_POST['old-image'];
+} else {
     $file_name = $_FILES['new-image']['name'];
     $file_size = $_FILES['new-image']['size'];
     $file_temp_name = $_FILES['new-image']['tmp_name'];
-    $file_type = $_FILES['new-image']['type'];
 
     $temp = explode('.', $file_name);
     $file_extension = strtolower(end($temp));
@@ -25,19 +25,30 @@ if (empty($_FILES['new-image']['name'])) {
     }
 
     if (empty($errors)) {
-        $upload_dir = 'upload/';
         if (!is_dir($upload_dir)) {
             mkdir($upload_dir, 0755, true);
         }
 
-        if (!move_uploaded_file($file_temp_name, $upload_dir . $file_name)) {
+        $unique_file_name = time() . '-' . basename($file_name);
+        $upload_path = $upload_dir . $unique_file_name;
+
+        if (move_uploaded_file($file_temp_name, $upload_path)) {
+            $image_save = $unique_file_name;
+
+            if (!empty($_POST['old-image']) && file_exists($upload_dir . $_POST['old-image'])) {
+                unlink($upload_dir . $_POST['old-image']);
+            }
+
+        } else {
             $errors[] = "Failed to move uploaded file.";
         }
     }
 
     if (!empty($errors)) {
-        print_r($errors);
-        die();
+        foreach ($errors as $error) {
+            echo "<div class='alert alert-danger'>{$error}</div>";
+        }
+        exit;
     }
 }
 
@@ -50,19 +61,15 @@ $sql = "UPDATE post
         SET title = '{$post_title}', 
             description = '{$post_description}', 
             category = {$post_category}, 
-            post_img = '{$file_name}' 
+            post_img = '{$image_save}' 
         WHERE post_id = {$post_id};";
 
-    if($_POST['old_category'] != $_POST['category']){
+if ($_POST['old_category'] != $_POST['category']) {
+    $sql .= "UPDATE category SET post = post - 1 WHERE category_id = {$_POST['old_category']};";
+    $sql .= "UPDATE category SET post = post + 1 WHERE category_id = {$_POST['category']};";
+}
 
-        $sql .= "UPDATE category SET post = post - 1 WHERE category_id = {$_POST['old_category']};";
-        $sql .= "UPDATE category SET post = post + 1 WHERE category_id = {$_POST['category']};";
-    }
-        
-
-$result = mysqli_multi_query($conn, $sql);
-
-if ($result) {
+if (mysqli_multi_query($conn, $sql)) {
     header("Location: {$hostname}/admin/post.php");
 } else {
     echo "<div class='alert alert-danger'>Update failed: " . mysqli_error($conn) . "</div>";

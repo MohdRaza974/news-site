@@ -1,4 +1,19 @@
-<?php include "header.php"; ?>
+<?php include "header.php";
+include 'config.php';
+$post_id = $_GET['id'];
+
+if($_SESSION["user_role"] == 0){
+
+
+$sql3 = "SELECT * FROM post WHERE post.post_id = {$post_id}";
+$result3 = mysqli_query($conn, $sql3);
+$row3 = mysqli_fetch_assoc($result3);
+if($row3['author'] != $_SESSION['user_id']){
+    header("location: {$hostname}/admin/post.php");
+}
+}
+
+?>
 <div id="admin-content">
     <div class="container">
         <div class="row">
@@ -8,9 +23,6 @@
             <div class="col-md-offset-3 col-md-6">
 
                 <?php
-                include 'config.php';
-                $post_id = $_GET['id'];
-
                 $sql = "SELECT post.post_id, post.title, post.description, post.post_img, post.category, category.category_name FROM post 
                         LEFT JOIN category ON post.category = category.category_id
                         LEFT JOIN user ON post.author = user.user_id
@@ -18,9 +30,7 @@
                 $result = mysqli_query($conn, $sql);
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
-
-
-                        ?>
+                ?>
                         <!-- Form for show edit-->
                         <form action="save-update-post.php" method="POST" enctype="multipart/form-data" autocomplete="off">
                             <div class="form-group">
@@ -47,9 +57,9 @@
                                     if (mysqli_num_rows($result1) > 0) {
 
                                         while ($row1 = mysqli_fetch_assoc($result1)) {
-                                            if($row['category'] == $row1['category_id']) {
+                                            if ($row['category'] == $row1['category_id']) {
                                                 $selected = "selected";
-                                            }else {
+                                            } else {
                                                 $selected = "";
                                             }
                                             echo "<option {$selected} value='{$row1['category_id']}'>{$row1['category_name']}</option>";
@@ -73,7 +83,7 @@
                             <input type="submit" name="submit" class="btn btn-primary" value="Update" />
                         </form>
 
-                        <?php
+                <?php
                     }
                 } else {
                     echo "Result not found.";
